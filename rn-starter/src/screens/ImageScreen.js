@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import ImageDetail from "../components/ImageDetail";
 
-export const ImageScreen = () => {
+const ImageScreen = () => {
   return (
     <View>
       <ImageDetail
@@ -23,3 +23,5 @@ export const ImageScreen = () => {
     </View>
   );
 };
+
+export default ImageScreen;
