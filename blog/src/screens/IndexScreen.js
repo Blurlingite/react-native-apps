@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,27 @@ import { Context } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = ({ navigation }) => {
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, addBlogPost, deleteBlogPost, getBlogPosts } = useContext(
+    Context
+  );
+
+  useEffect(() => {
+    getBlogPosts();
+
+    // when you are on a different screen and then navigate back to this screen, get all
+    // the blog posts so that way, newly made posts appear
+    // listeners can still be activated even if useEffect can only be called once
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+
+    // a return statement that returns a function right before useEffect ends means that if
+    // this instance of this screen stops showing (permanently)
+    // this is a great place to turn off all listeners (which you should to prevent memory leaks)
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <View>
